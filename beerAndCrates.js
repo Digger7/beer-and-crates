@@ -28,4 +28,4 @@ const solution = (bottleCount, cratesSizeArr) => {
 
 const cratesSizeArr = [3,25,13,54]
 const bottleCount = 52
-console.log(`bottleCount:${bottleCount}`, solution(bottleCount, cratesSizeArr))
+console.log(`bottleCount: ${bottleCount}`, solution(bottleCount, cratesSizeArr))
