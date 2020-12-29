@@ -1,38 +1,31 @@
-const solution = (bottleCount) => {
+const solution = (bottleCount, cratesSizeArr) => {
 
-    const boxSize = [3,25,12,54]
-
-    let boxSizeSorted = boxSize.sort((a, b) => {
+    let cratesSizeSorted = cratesSizeArr.sort((a, b) => {
         return a > b ? 1 : -1
     })
 
-    let result = [[boxSizeSorted[0],1]]
-    for(let item of boxSizeSorted){
+    let result = []
+    for(let item of cratesSizeSorted){
         let bottlesFitIntoABox = bottleCount/item
-        if(bottlesFitIntoABox<1) {
-            result = [[item,1]]
-            break;
-        }
+        if(bottlesFitIntoABox>1 || bottlesFitIntoABox<1){
+            let residue = bottlesFitIntoABox-Math.trunc(bottlesFitIntoABox)
+            let cratesCount = Math.trunc(bottlesFitIntoABox) + (residue>0?1:0)
+            result.push([item, cratesCount, cratesCount * item - bottleCount])
+        }else
+            if(bottlesFitIntoABox===1)
+                return [item,bottlesFitIntoABox, 0]
     }
-    if(bottleCount>result[0][0]){
-        let maxBox = boxSizeSorted[boxSizeSorted.length-1]
-        let bottlesFitIntoAMaxBox = bottleCount/maxBox
-        result = [[maxBox,Math.trunc(bottlesFitIntoAMaxBox)]]
-        if(bottlesFitIntoAMaxBox>1) {
-            let recidue = bottleCount - Math.trunc(bottlesFitIntoAMaxBox)*maxBox
-            for (let item  of boxSizeSorted){
-                if(item > recidue && recidue > 0) {
-                    if(item===result[result.length-1][0]){
-                        result[result.length-1][1]++
-                    }else{
-                        result.push([item,1])
-                    }
-                    break
-                }
-            }
-        }
-    }
-    return result
+
+    result =  result.sort((a,b)=>{
+        return a[2]>b[2]?1:-1
+    })
+
+    //console.log(result)
+
+    return result[0]
+
 }
 
-console.log(solution(127))
+const cratesSizeArr = [3,25,13,54]
+const bottleCount = 52
+console.log(`bottleCount:${bottleCount}`, solution(bottleCount, cratesSizeArr))
