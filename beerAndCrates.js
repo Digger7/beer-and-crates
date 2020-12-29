@@ -17,7 +17,7 @@ const solution = (bottleCount, cratesSizeArr) => {
     }
 
     result =  result.sort((a,b)=>{
-        return a[2]>b[2]?1:-1
+        return a[2] > b[2] ? 1 : -1
     })
 
     //console.log(result)
